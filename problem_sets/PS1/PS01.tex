@@ -1,5 +1,6 @@
 \documentclass[12pt,letterpaper]{article}
 \usepackage{graphicx,textcomp}
+\usepackage[T1]{fontenc}
 \usepackage{natbib}
 \usepackage{setspace}
 \usepackage{fullpage}
@@ -87,20 +88,94 @@ A private school counselor was curious about the average of IQ of the students i
 
 \noindent Find a 90\% confidence interval for the student IQ in the school assuming the population of IQ from which our random sample has been selected is normally distributed. 
 
+\newpage
+
+\noindent \textbf{\section*{Answer:}}
+
+\noindent First, I calculated the t-score for a t-distribution with 24 degrees of freedom (degrees of freedom = sample size - 1; 25 - 1 = 24) using the qt function. The area of each tail is (1 - 0.9) / 2, and using the "lower.tail = FALSE" argument, I calculated the positive t-score for the distribution.
+
+t90 <-- qt((1 - 0.9) / 2, lower.tail = FALSE, df = 24)
+
+\vspace{0.5cm}
+\noindent Then, I stored the sample size, sample mean, and the standard deviation into variables using R functions.
+
+n <-- length(y)
+
+sample\_mean <-- mean(y)
+
+sample\_sd <-- sd(y)
+
+\vspace{0.5cm}
+\noindent Then, I calculated the standard error and the upper/lower bounds of the 90\% confidence interval.
+
+sample\_se <- sample\_sd / sqrt(n)
+
+lower\_90 <- sample\_mean - (t90 * sample\_se)
+
+upper\_90 <- sample\_mean + (t90 * sample\_se) 
+
+confint <- c(lower\_90, upper\_90)
+
+confint = (93.95993, 102.92007)
+
+\vspace{0.5cm}
+\noindent The 90\% confidence interval for student IQ in the school is (93.96, 102.92).
 \vspace{1cm}
+
 \section*{Question 2 (25 points)}
 A private school counselor was curious  whether  the average of IQ of the students in her school is higher than the average IQ score 100 among all the schools in the country. She took a random sample of 25 students' IQ scores. The following is the data set:
 \vspace{.5cm}
-\lstinputlisting[language=R, firstline=46, lastline=46]{PS1.R}  
+\lstinputlisting[language=R, firstline=55, lastline=55]{PS1.R}
 \vspace{.5cm}
 
 \noindent Conduct a test with 0.05 significance level assuming the population of IQ from which our random sample has been selected is normally distributed. 
+
+\newpage
+\noindent \textbf{\section*{Answer:}}
+
+\noindent First, I conducted a one sample t-test: 
+
+t.test(y, mu = 100)
+
+\vspace{.5cm}
+\noindent Output:
+\begin{figure} [h]
+	\centering
+	\includegraphics[width=0.7\linewidth]{"../../../../../Desktop/R Output"}
+	\label{fig:r-output}
+\end{figure}
+
+\noindent Since the p-value of 0.5569 is greater than the alpha of 0.05, we fail to reject the Ho. Therefore, we conclude that the true national mean IQ in schools is not significantly different from 100. Moreover, we are 95\% confident that the true national mean IQ in schools is between 93.04 and 103.84. There is not sufficient evidence to conclude that the true mean is significantly different from 100.
 
 \vspace{1cm}
 	\section*{Question 3 (50 points)}
 Assume $y$ is variable with values 1,2,3,4 standing for ``Freshman", ``Sophomore", ``Junior", and ``Senior", convert $y$ from numbers to characters in \texttt{R}:
 \vspace{.5cm}
-\lstinputlisting[language=R, firstline=52, lastline=52]{PS1.R}  
+
+
+\noindent I created a variable yNew for y and assigned student classifications based on the corresponding numerical values.
+
+y <-- c(1, 2, 1, 3, 4, 1, 1, 4, 2, 1, 3, 4, 3, 2, 1, 3, 4, 1, 2, 3, 1, 1, 2, 1, 1, 3, 4)
+
+yNew <-- y 
+
+yNew[y==1] <-- "Freshman"
+
+yNew[y==2] <-- "Sophomore"
+
+yNew[y==3] <-- "Junior"
+
+yNew[y==4] <-- "Senior"
+
+table(yNew)
+
+\begin{figure} [h]
+	\centering
+	\includegraphics[width=0.4\linewidth]{../../../../../Desktop/class}
+	\label{fig:class}
+\end{figure}
+
+
 \vspace{.5cm}
 
 \noindent Researchers are curious about what affects the education expenditure on public education. The following is availabe variables in a data set about the education expenditure. \\
@@ -119,7 +194,7 @@ Assume $y$ is variable with values 1,2,3,4 standing for ``Freshman", ``Sophomore
 \vspace{.5cm}
 \noindent Explore the \texttt{expenditure} data set and import data into \texttt{R}.
 \vspace{.5cm}
-\lstinputlisting[language=R, firstline=54, lastline=54]{PS1.R}  
+\lstinputlisting[language=R, firstline=77, lastline=77]{PS1.R}  
 \vspace{.5cm}
 \begin{itemize}
 
@@ -131,6 +206,12 @@ Please plot the relationship between \emph{Y} and \emph{Region}? On average, whi
 \vspace{.5cm}
 \item
 Please plot the relationship between \emph{Y} and \emph{X1}? Describe this graph and the relationship. Reproduce the above graph including one more variable \emph{Region} and display different regions with different types of symbols and colors.
+
+\newpage
+
+\noindent \textbf{\section*{Answer:}}
+
+
 \end{itemize}
 
 \end{document}
