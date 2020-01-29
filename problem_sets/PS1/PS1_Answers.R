@@ -65,7 +65,7 @@ tstat <- (sample_mean - 100) / sample_se # Calculating test statistic
 pvalue <- pt(tstat, df = 24, lower.tail = F) # Calculating the p-value for a one-tailed test
 pvalue # 0.7215; greater than the alpha value of 0.05
 
-t.test(y, mu = 100, alternative = "greater") # Checking my answer
+t.test(y, mu = 100, alternative = "greater") # Checking answer
 
 # Since the p-value of 0.7215 is greater than the alpha value of 0.05, we fail to reject the Ho.
 # Therefore, we cannot conclude that the true national mean IQ in schools is higher than 100.
