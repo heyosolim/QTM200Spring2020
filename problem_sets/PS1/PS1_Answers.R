@@ -107,7 +107,6 @@ expenditure$newRegion[expenditure$Region == 2] <- "North Central"
 expenditure$newRegion[expenditure$Region == 3] <- "South"
 expenditure$newRegion[expenditure$Region == 4] <- "West"
 
-
 summarySE(data = expenditure, measurevar = "Y", groupvars = "newRegion")
 
 # Expenditure vs. Income
