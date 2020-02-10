@@ -4,12 +4,6 @@
 # clear global .envir
 #####################
 
-install.packages("Rmisc")
-library(Rmisc)
-
-install.packages("ggplot2")
-library(ggplot2)
-
 # remove objects
 rm(list=ls())
 # detach all libraries
@@ -34,6 +28,12 @@ pkgTest <- function(pkg){
 # lapply(c("stringr"),  pkgTest)
 
 lapply(c(),  pkgTest)
+
+install.packages("Rmisc")
+library(Rmisc)
+
+install.packages("ggplot2")
+library(ggplot2)
 
 # set working directory
 setwd("~/Documents/GitHub/QTM200Spring2020/problem_sets/PS1")
