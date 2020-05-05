@@ -54,20 +54,26 @@ byHandChiSquare <- function(table){
   # check "?outer" to see that this takes the outer product
   # of the row and col sum divided by the total sum
   expectedValues <- outer(sumRow, sumCol, "*") / grandSum
+  v <- function(r, c, n) c * r * (n - r) * (n - c)/n^3
+  V <- outer(sumRow, sumCol, v, grandSum)
+  
   dimnames(expectedValues) <- dimnames(observedValues)
   # create function that calculates each cell residual variance
   # essentially formula on p. 225 in Agresti and Finlay(2009)
   test_statistic <- sum((abs(table - expectedValues))^2 / expectedValues)
   df <- (nrow(observedValues) - 1L) * (ncol(observedValues) - 1L)
   p_value <- pchisq(test_statistic, df, lower.tail = FALSE)
+  adjusted_residuals <- (observedValues - expectedValues)/sqrt(expectedValues * (1-sumRow/grandSum) * (1-sumCol/grandSum))
+  standardized_residuals <- (observedValues - expectedValues)/sqrt(V)
   # return values
   return(list(statistic = test_statistic,
               df = df,
               p.value = p_value,
               observed = observedValues,
-              expected = expectedValues))  
+              expected = expectedValues, 
+              adj_res = adjusted_residuals,
+              std_res = standardized_residuals))  
 }
-# run function on trafficViolations matrix
 byHandChiSquare(table=trafficViolations)
 
 # run chi square test with built in function
@@ -92,7 +98,7 @@ summary(regression_model_problem2)
 #####################
 
 # (a) import the data set
-fruitfly <- read.csv("../fruitfly.csv")
+fruitfly <- read.csv("https://raw.githubusercontent.com/jeffreyziegler/QTM200Spring2020/master/problem_sets/PS2/fruitfly.csv")
 # summarize the statistics in the data set
 summary(fruitfly)
 # show the distribution of the overall lifespan of the fruitflies
